@@ -1,8 +1,9 @@
+import { config } from "./config.js";
 import { connect } from "mongoose";
 
 export const startConnection = async () => {
     try {
-        const db = await connect("mongodb://localhost:27017", {
+        const db = await connect(config.mongo_uri, {
             dbName: "Sandra",
         })
     console.log("Database is connected to:", db.connection.name);
