@@ -14,13 +14,25 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
-  tasks: [
-    {
-      type: Types.ObjectId,
-      ref: "Task",
-    }
-  ], 
+  }, //! RELACIÓN ENDEBIDA (TODO ESTA DENTRO)
+  tasks: [ //* GENERA UNA RELACIÓN Y COLOCA UN ID - NO SE NECESITA UN CRUD COMPLETA PERO LAS PETICIONES SE HACEN AL USUARIO
+    { 
+    text: {
+      type: String,
+      required: true,
+    },
+    done: {
+      type: Boolean,
+      default: false,
+    },
+  }
+  ],
+  // tasks: [ //! RELACIÓN 
+  //   {
+  //     type: Types.ObjectId,
+  //     ref: "Task",
+  //   }
+  // ], 
 });
 
 
