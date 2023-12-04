@@ -4,11 +4,11 @@ import { ctrlCreateTask, ctrlListTasks, ctrlDeleteTask } from "../controllers/ta
 const taskRouter = Router()
 
 
-taskRouterRouter.get("/", ctrlListTasks)
+taskRouter.get("/", ctrlListTasks)
 
-taskRouterRouter.post("/", ctrlCreateTask)
+taskRouter.post("/", ctrlCreateTask)
 
-taskRouterRouter.delete("/", ctrlDeleteTask)
+taskRouter.delete("/:taskId", ctrlDeleteTask)
 
 
 export { taskRouter }

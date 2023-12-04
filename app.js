@@ -4,7 +4,10 @@ import morgan from "morgan";
 
 import { config } from "./src/settings/config.js";
 import { startConnection } from "./src/settings/database.js";
+
+
 import { userRouter } from "./src/routers/userRouter.js"
+import { taskRouter } from "./src/routers/taskRouter.js";
 
 const app = express();
 
@@ -15,7 +18,7 @@ app.use(morgan("dev"));
 
 
 app.use("/users", userRouter)
-
+app.use("/tasks", taskRouter)
 
 
 app.listen(config.port, async () => {

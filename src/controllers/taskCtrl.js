@@ -7,12 +7,13 @@ export const ctrlCreateTask = async (req, res) => {
 
     if (!user) return res.sendStatus(404);
 
-    const newTask = new TaskModel(req.body); //*VALIDA SOLO SI EXISTE EL USUARIO
+    const newTask = new TaskModel(req.body);
 
     await newTask.save();
 
     //await user.updateOne({ $push : { tasks: newTask._id }})
-    user.tasks.push(newTask - _id);
+
+    user.tasks.push(newTask._id);
 
     await user.save();
 
@@ -23,11 +24,9 @@ export const ctrlCreateTask = async (req, res) => {
   }
 };
 
-//! CREAR LOS DEMAS CONTROLLERS
-
 export const ctrlListTasks = async (req, res) => {
   try {
-    const tasks = await TaskModel.find({});
+    const tasks = await TaskModel.find({}).populate("user", ["username", "email"]);
 
     res.status(200).json(tasks);
   } catch (error) {
@@ -40,17 +39,17 @@ export const ctrlDeleteTask = async (req, res) => {
   try {
     const { taskId } = req.params;
 
-    const task = await TaskModel.findById(taskId)
+    const task = await TaskModel.findById(taskId);
 
     if (!task) return res.sendStatus(404);
 
-    const user = await UserModelModel.findById(task.user)
+    const user = await UserModel.findById(task.user);
 
-await task.deleteOne()
+    await task.deleteOne();
 
-user.tasks = user.tasks.filter((task) => task._id === taskId)
+    user.tasks = user.tasks.filter((task) => task._id === taskId);
 
-await user.save()
+    await user.save();
 
     res.sendStatus(200);
   } catch (error) {

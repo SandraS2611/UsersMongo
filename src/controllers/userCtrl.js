@@ -10,10 +10,9 @@ export const ctrlCreateNewUser = async (req, res) => {
   }
 };
 
-
 export const ctrlListUsers = async (req, res) => {
   try {
-    const allUsers = await UserModel.find();
+    const allUsers = await UserModel.find().populate("tasks", ["text", "done"]);
 
     res.status(200).json(allUsers);
   } catch (error) {
@@ -22,12 +21,14 @@ export const ctrlListUsers = async (req, res) => {
   }
 };
 
-
 export const ctrlFindOneUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const user = await UserModel.findOne({ _id: userId });
+    const user = await UserModel.findOne({ _id: userId }).populate("tasks", [
+      "text",
+      "done",
+    ]);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -40,16 +41,15 @@ export const ctrlFindOneUser = async (req, res) => {
   }
 };
 
-
 export const ctrlUpdateUser = async (req, res) => {
-    const { userId } = req.params 
+  const { userId } = req.params;
 
   try {
-    const user = await UserModel.findOne({ _id: userId })
+    const user = await UserModel.findOne({ _id: userId });
 
-    user.set(req.body)
+    user.set(req.body);
 
-    await user.save()
+    await user.save();
 
     res.status(200).json(user);
   } catch (error) {
@@ -58,13 +58,12 @@ export const ctrlUpdateUser = async (req, res) => {
   }
 };
 
-
 export const ctrlDeleteUser = async (req, res) => {
-    const { userId } = req.params;
+  const { userId } = req.params;
   try {
     await UserModel.findOneAndDelete({ _id: userId });
 
-    res.sendStatus(200)
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
