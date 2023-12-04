@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 //*MOLDE le da forma a nuestro usuario
 const userSchema = new Schema({
@@ -15,6 +15,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  tasks: [
+    {
+      type: Types.ObjectId,
+      ref: "Task",
+    }
+  ], 
 });
 
 
