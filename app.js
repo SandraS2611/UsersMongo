@@ -8,6 +8,7 @@ import { startConnection } from "./src/settings/database.js";
 
 import { userRouter } from "./src/routers/userRouter.js"
 import { taskRouter } from "./src/routers/taskRouter.js";
+import { aggregateProduct } from "./src/models/productModels.js";
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use("/tasks", taskRouter)
 app.listen(config.port, async () => {
     
     await startConnection();
+
+    await aggregateProduct()
   
     // await aggregateProduct();
   
